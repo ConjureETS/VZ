@@ -5,8 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Human
-  - Player1
-  - Player2
+  - VampirePlayer
+  - ZombiePlayer
   layers:
   - Default
   - TransparentFX
