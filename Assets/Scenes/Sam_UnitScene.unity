@@ -100,8 +100,8 @@ GameObject:
   - 23: {fileID: 90076752}
   - 114: {fileID: 90076751}
   m_Layer: 0
-  m_Name: CollisionField
-  m_TagString: Untagged
+  m_Name: VampireCollisionField
+  m_TagString: VampirePlayer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -126,9 +126,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 90076749}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a1ccd1ad32d6bc4fb600c5b5720e01c, type: 3}
+  m_Script: {fileID: 11500000, guid: c1cd93867b8a1d7459a4fb92cac63854, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultHp: 250
+  defaultAttack: 100
 --- !u!23 &90076752
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -185,7 +187,6 @@ GameObject:
   - 23: {fileID: 209133696}
   - 143: {fileID: 209133700}
   - 54: {fileID: 209133701}
-  - 114: {fileID: 209133702}
   m_Layer: 0
   m_Name: Vampire
   m_TagString: VampirePlayer
@@ -281,17 +282,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &209133702
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 209133695}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1cd93867b8a1d7459a4fb92cac63854, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &215281597
 GameObject:
   m_ObjectHideFlags: 0
@@ -448,7 +438,7 @@ GameObject:
   - 33: {fileID: 1674696789}
   - 65: {fileID: 1674696788}
   - 23: {fileID: 1674696787}
-  - 114: {fileID: 1674696790}
+  - 54: {fileID: 1674696791}
   m_Layer: 0
   m_Name: Human
   m_TagString: Human
@@ -463,7 +453,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1674696785}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5, z: 25}
+  m_LocalPosition: {x: 0, y: 15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2081975386}
@@ -512,17 +502,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1674696785}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1674696790
-MonoBehaviour:
+--- !u!54 &1674696791
+Rigidbody:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1674696785}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a1ccd1ad32d6bc4fb600c5b5720e01c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: .0500000007
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1780458434
 GameObject:
   m_ObjectHideFlags: 0
@@ -606,8 +600,8 @@ GameObject:
   - 23: {fileID: 2081975383}
   - 114: {fileID: 2081975387}
   m_Layer: 0
-  m_Name: CollisionField
-  m_TagString: Untagged
+  m_Name: HumanCollisionField
+  m_TagString: Human
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -678,3 +672,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a1ccd1ad32d6bc4fb600c5b5720e01c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultHp: 250
+  defaultAttack: 100

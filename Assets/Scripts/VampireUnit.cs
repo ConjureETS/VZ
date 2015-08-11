@@ -7,22 +7,34 @@ using System.Collections;
 public class VampireUnit : Unit
 {
 	// Use this for initialization
+ 
 	void Start ()
 	{
 		InitializeDefaultTag();
+		// initialize default hp
+		//Hp = defaultHp;
+		// initialize default attack
+		Attack = defaultAttack;
+		// initialize default team
+		// initialize default specie
+		isDead = false;
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
-	
+		if (isDead)
+		{
+			// TODO play dead animation before destroying unit
+			DestroyUnit();
+		}
 	}
 
 	private void InitializeDefaultTag()
 	{
 		try
 		{
-		    this.Tag = TagManager.VampirePlayer; // set the tag to player 1       
+			this.Tag = TagManager.VampirePlayer; // set the tag to player 1       
 		}
 		catch (IndexOutOfRangeException ex)
 		{
@@ -34,5 +46,51 @@ public class VampireUnit : Unit
 		{
 			this.gameObject.tag = Tag;
 		}        
+	}
+
+	void CaptureHuman(Unit unit)
+	{
+		// TODO either add the human as a squad member or change it's tag to vampireHuman
+		// when the player is transformed we just make VampireUnit vampireUnit2 = (VampireUnit) unit;
+		Debug.Log("Entered in collision with: " + unit.Tag );
+	}
+
+	void AttackEnemy(Unit unit)
+	{
+		// compute the amount of hp reduced to this unit
+		unit.Hp -= Attack; // we remove some hp of the unit that was 
+		Debug.Log("Attacked the ennemy : " + unit.Tag);
+	}
+
+	/// <summary>
+	/// Destroy the current unit
+	/// </summary>
+	void DestroyUnit()
+	{
+		Destroy(this.gameObject);
+	}
+
+	void OnTriggerEnter(Collider collider)
+	{
+		//var objectTag = collider.gameObject;
+		// check if the game object have an attached Unit class
+		//switch(objectTag.GetType())
+		var unitComponent = collider.GetComponent<Unit>();
+
+		if (unitComponent != null)
+		{
+			// check if the unit is not a friendly one    
+			if (this.Tag != unitComponent.Tag)
+			{
+				if (unitComponent.Tag.Equals(TagManager.Human))
+				{
+					CaptureHuman(unitComponent);
+				}
+				else // we know that it's an ennemy
+				{
+					AttackEnemy(unitComponent);
+				}
+			}
+		}
 	}
 }
