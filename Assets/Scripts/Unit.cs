@@ -9,17 +9,17 @@ public class Unit : MonoBehaviour
     private LinkedList<Command> commandList;
     public int defaultHp = 250;
     public int defaultAttack = 100;
-    
+    private int _hp; // the unit hp
     // Use this for initialization
     void Start () 
     {
         // initialize default hp
-        //Hp = defaultHp;
+        Hp = defaultHp;
         // initialize default attack
         Attack = defaultAttack;
         // initialize default team
         // initialize default specie
-        isDead = false;
+        IsDead = false;
     }
 
     /// <summary>
@@ -41,17 +41,39 @@ public class Unit : MonoBehaviour
     /// </summary>
     protected void DestroyUnit()
     {
+        //TODO First play dead animation
+        // then destroy the game object
         Destroy(this.transform.gameObject);
     }
 
     #region Unit properties
 
-    public int Hp { get; set; }
+    public int Hp
+    {
+        get { return _hp; }
+
+        set
+        {
+            if (Hp < 0)
+            {
+                _hp = 0;
+                IsDead = true;
+            }
+            else if (value > defaultHp)
+            {
+                _hp = defaultHp;
+            }
+            else
+            {
+                _hp = value;
+            }
+        }
+    }
 
     public int Attack { get; set; }
     //public bool isAlly { get; set; }
     //public bool isHuman { get; set; }
-    public bool isDead { get; set; }
+    public bool IsDead { get; set; }
 
     public String Tag
     {

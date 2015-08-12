@@ -17,13 +17,13 @@ public class VampireUnit : Unit
         Attack = defaultAttack;
         // initialize default team
         // initialize default specie
-        isDead = false;
+        IsDead = false;
     }
     
     // Update is called once per frame
     void Update () 
     {
-        if (isDead)
+        if (IsDead)
         {
             // TODO play dead animation before destroying unit
             DestroyUnit();
@@ -58,17 +58,10 @@ public class VampireUnit : Unit
     void AttackEnemy(Unit unit)
     {
         //TODO improve this method to compute the reduce of hp, etc...
-        if (unit.Hp <= 0)
-        {
-            unit.isDead = true;
-        }
-        else
-        {
-            // compute the amount of hp reduced to this unit
-            unit.Hp -= Attack; // we remove some hp of the unit that was 
+        // compute the amount of hp reduced to this unit
+        unit.Hp -= Attack; // we remove some hp of the unit that was 
 
-            Debug.Log("Attacked the ennemy : " + unit.Tag);   
-        }
+        Debug.Log("Attacked the ennemy : " + unit.Tag);   
     }
 
     void OnTriggerEnter(Collider collider)
