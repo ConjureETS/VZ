@@ -41,7 +41,7 @@ public class Unit : MonoBehaviour
     /// </summary>
     protected void DestroyUnit()
     {
-        Destroy(this.transform.parent.gameObject);
+        Destroy(this.transform.gameObject);
     }
 
     #region Unit properties
