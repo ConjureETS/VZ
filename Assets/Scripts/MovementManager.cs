@@ -74,8 +74,10 @@ public class MovementManager : MonoBehaviour
             {
                 return p2MovBuffer.Dequeue();
             }
-        }catch(Invalide e)
+        }catch(InvalidOperationException exception)
         {
+            Debug.LogError("Reached the end of the queue we stop by default!: " + exception);
+
             return "Stop";
         }
         return null;
