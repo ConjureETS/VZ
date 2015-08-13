@@ -4,7 +4,7 @@ using System.Collections;
 /// <summary>
 /// This class contains the information of the Vampire Units.
 /// </summary>
-public class VampireUnit : Unit
+public class VampireUnit : Squad
 {
     // Use this for initialization
  

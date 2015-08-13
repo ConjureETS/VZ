@@ -4,7 +4,7 @@ using System.Collections;
 /// <summary>
 /// This class contains the information of the Vampire Units.
 /// </summary>
-public class ZombieUnit : Unit
+public class ZombieUnit : Squad
 {
     // Use this for initialization
 
@@ -41,7 +41,7 @@ public class ZombieUnit : Unit
             Debug.LogError("Please set a vampire Tag, check the Tag & layers in the inspector!\n" + ex);
         }
 
-        // set the tag of the gameObject to vampire
+        // set the tag of the gameObject to zombie
         if (this.gameObject.tag != Tag)
         {
             this.gameObject.tag = Tag;

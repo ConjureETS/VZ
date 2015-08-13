@@ -26,12 +26,12 @@ public class Unit : MonoBehaviour
     /// Add a command at the end of the list
     /// </summary>
     /// <param name="c">The command to add</param>
-    protected void addCommand(Command c)
+    protected void AddCommand(Command c)
     {
         this.commandList.AddLast(c);
     }
 
-    protected void executeCommand()
+    protected void ExecuteCommand()
     {
         
     }
