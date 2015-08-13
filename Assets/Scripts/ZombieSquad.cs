@@ -4,12 +4,13 @@ using System.Collections;
 /// <summary>
 /// This class contains the information of the Vampire Units.
 /// </summary>
-public class ZombieUnit : Squad
+public class ZombieSquad : Squad
 {
     // Use this for initialization
 
     void Start()
     {
+        InitializeSquad();
         InitializeDefaultTag();
         // initialize default hp
         //Hp = defaultHp;
@@ -51,17 +52,17 @@ public class ZombieUnit : Squad
     void CaptureHuman(Unit unit)
     {
         // TODO either add the human as a squad member or change it's tag to vampireHuman
-        // when the player is transformed we just make VampireUnit vampireUnit2 = (VampireUnit) unit;
+        // when the player is transformed we just make VampireSquad vampireUnit2 = (VampireSquad) unit;
         Debug.Log("Entered in collision with: " + unit.Tag);
     }
-    void AttackEnemy(Unit unit)
+    /*void AttackEnemySquad(Unit unit)
     {
        
         // compute the amount of hp reduced to this unit
         unit.Hp -= Attack; // we remove some hp of the unit that was 
 
         Debug.Log("Attacked the ennemy : " + unit.Tag);
-    }
+    }*/
 
     void OnTriggerEnter(Collider collider)
     {
@@ -70,20 +71,28 @@ public class ZombieUnit : Squad
         //switch(objectTag.GetType())
         var unitComponent = collider.GetComponent<Unit>();
 
-        if (unitComponent != null)
+        if (unitComponent == null)
+            return;
+        // check if the unit is not a friendly one    
+        if (this.Tag == unitComponent.Tag)
+            return;
+
+        if (unitComponent.Tag.Equals(TagManager.Human))
         {
-            // check if the unit is not a friendly one    
-            if (this.Tag != unitComponent.Tag)
+            CaptureHuman(unitComponent);
+        }
+        else // we know that it's an ennemy
+        {
+            try
             {
-                if (unitComponent.Tag.Equals(TagManager.Human))
-                {
-                    CaptureHuman(unitComponent);
-                }
-                else // we know that it's an ennemy
-                {
-                    AttackEnemy(unitComponent);
-                }
+                AttackEnemySquad(unitComponent as Squad);
             }
+            catch (InvalidCastException exception)
+            {
+                Debug.LogError(exception.ToString());
+                //throw;
+            }
+
         }
     }
 }
