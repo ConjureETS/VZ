@@ -11,8 +11,9 @@ public class Unit : MonoBehaviour
     public int defaultAttack = 100;
     private int _hp; // the unit hp
     // Use this for initialization
-    void Start () 
+    void Start ()
     {
+        IsCaptured = false;
         // initialize default hp
         Hp = defaultHp;
         // initialize default attack
@@ -47,7 +48,7 @@ public class Unit : MonoBehaviour
     }
 
     #region Unit properties
-
+    public bool IsCaptured { get; set; }
     public int Hp
     {
         get { return _hp; }

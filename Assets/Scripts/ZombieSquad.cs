@@ -49,12 +49,12 @@ public class ZombieSquad : Squad
         }
     }
 
-    void CaptureHuman(Unit unit)
+    /*void CaptureHuman(Unit unit)
     {
         // TODO either add the human as a squad member or change it's tag to vampireHuman
         // when the player is transformed we just make VampireSquad vampireUnit2 = (VampireSquad) unit;
         Debug.Log("Entered in collision with: " + unit.Tag);
-    }
+    }*/
     /*void AttackEnemySquad(Unit unit)
     {
        

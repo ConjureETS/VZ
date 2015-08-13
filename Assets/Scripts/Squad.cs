@@ -213,10 +213,15 @@ public class Squad : Unit
         }
     }
 
-    void CaptureHuman(Unit unit)
+    protected void CaptureHuman(Unit unit)
     {
+        // make the human a child of the squad game object
+        //Debug.Log(String.Format("Human parent before colision :{0}", unit.transform.name));
+        unit.IsCaptured = true;
+        unit.transform.parent = this.transform;
+        //Debug.Log(String.Format("Human parent before colision :{0}", unit.transform.parent.name));
         AddHuman(unit);
-        Debug.Log("Entered in collision with: " + unit.Tag);
+        Debug.Log(string.Format("{0} joined the squad of : {1} ", unit.gameObject.name, transform.gameObject.name));
     }
 
     protected void AttackEnemySquad(Squad targettedEnemySquad)
@@ -224,8 +229,7 @@ public class Squad : Unit
         //TODO improve this method add the total of squad damage or to compute the reduce of hp, etc...
         // compute the amount of hp reduced to this unit
         //unit.Hp -= Attack; // we remove some hp of the unit that was 
-        var amountOfDamageToApply = ComputeAttackDamage();
-        targettedEnemySquad.ReceiveDamage(amountOfDamageToApply);
+        targettedEnemySquad.ReceiveDamage(ComputeAttackDamage());
 
         Debug.Log("Attacked the ennemy : " + targettedEnemySquad.Tag);
     }

@@ -49,12 +49,12 @@ public class VampireSquad : Squad
         }        
     }
 
-    void CaptureHuman(Unit unit)
+    /*void CaptureHuman(Unit unit)
     {
         // TODO either add the human as a squad member or change it's tag to vampireHuman
         // when the player is transformed we just make VampireSquad vampireUnit2 = (VampireSquad) unit;
         Debug.Log("Entered in collision with: " + unit.Tag );
-    }
+    }*/
 
    /* void AttackEnemySquad(Unit unit)
     {
@@ -80,7 +80,14 @@ public class VampireSquad : Squad
 
         if (unitComponent.Tag.Equals(TagManager.Human))
         {
-            CaptureHuman(unitComponent);
+            if (unitComponent.IsCaptured)
+            {
+                return;
+            }
+            else
+            {
+                CaptureHuman(unitComponent);
+            }
         }
         else // we know that it's an ennemy
         {
