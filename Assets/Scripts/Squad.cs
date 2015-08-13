@@ -11,12 +11,12 @@ public class Squad : Unit
     /// <summary>
     /// List of non attackable units.
     /// </summary>
-    private List<Unit> humans;
+    private List<Unit> _humans;
     
     /// <summary>
     /// List of attackable units.
     /// </summary>
-    private List<Squad> soldiers;
+    private List<Squad> _soldiers;
 
     /// <summary>
     /// List of abandonned units. (this list is accessible for both teams)
@@ -26,20 +26,20 @@ public class Squad : Unit
     /// <summary>
     /// Index of the first soldier in the list.
     /// </summary>
-    private int targetSoldierIndex;
+    private int squadLeaderPosition;
     
     /// <summary>
     /// The tag to assign for each soldiers in the squad
     /// </summary>
-    protected String squadTag;
+    //protected String SquadTag;
     
     #endregion
 
     // Use this for initialization
     void Awake ()
     {
-        humans = new List<Unit>();
-        soldiers = new List<Squad>();
+        _humans = new List<Unit>();
+        _soldiers = new List<Squad>();
     }
     
     // Update is called once per frame
@@ -48,9 +48,9 @@ public class Squad : Unit
         // TODO execute movement command
         // TODO Check if all the units are dead
             // if yes destroy 
-        if (soldiers.Count != 0) return;
+        if (_soldiers.Count != 0) return;
         // first release all humans ...
-        AbandonUnits(humans.Count);
+        AbandonUnits(_humans.Count);
         // then we destroy the squad
         DestroyUnit();
     }
@@ -61,9 +61,9 @@ public class Squad : Unit
     /// </summary>
     protected void InitializeSquad()
     {
-        if (soldiers.Count == 0)
+        if (_soldiers.Count == 0)
         {
-            this.soldiers.Add(this.gameObject.GetComponent<Squad>());
+            this._soldiers.Add(this.gameObject.GetComponent<Squad>());
         }
     }
 
@@ -73,7 +73,7 @@ public class Squad : Unit
     /// <param name="humanUnit">the human unit to add in the human unit list</param>
     void AddHuman(Unit humanUnit) 
     {
-        humans.Add(humanUnit);
+        _humans.Add(humanUnit);
     }
 
     /// <summary>
@@ -82,7 +82,7 @@ public class Squad : Unit
     /// <param name="soldierUnit">the soldier unit to add in the soldier unit list</param>
     void AddSoldier(Squad soldierUnit)
     {
-        soldiers.Add(soldierUnit);
+        _soldiers.Add(soldierUnit);
     }
 
     /// <summary>
@@ -111,9 +111,9 @@ public class Squad : Unit
     public void HealSquad(Unit humanUnit)
     {
        
-        var percentageOfHpToHeal = ( humanUnit.Hp / soldiers.Count );
+        var percentageOfHpToHeal = ( humanUnit.Hp / _soldiers.Count );
         
-        foreach (var soldier in soldiers)
+        foreach (var soldier in _soldiers)
         {
             soldier.Hp += soldier.Hp * ( 1 + percentageOfHpToHeal );
         }
@@ -128,12 +128,12 @@ public class Squad : Unit
     /// <param name="nbUnits">The number of units to abandon</param>
     public void AbandonUnits(int nbUnits)
     {
-        if (nbUnits <= humans.Count)
+        if (nbUnits <= _humans.Count)
         {
             for (var i = 0; i < nbUnits; i++)
             {
                 // retreive the human at the specified index
-                var humanUnit = humans.ElementAt(i);
+                var humanUnit = _humans.ElementAt(i);
                 // add the human to the abandonned Unit list
                 AddAbandonnedHuman(humanUnit);
                 // remove the human from the humandUnit that was added to the abandonned unit list
@@ -152,7 +152,7 @@ public class Squad : Unit
     /// <param name="soldierUnit">the corresponding soldier that we want to remove</param>
     void RemoveSoldier(Squad soldierUnit)
     {
-        soldiers.Remove(soldierUnit);
+        _soldiers.Remove(soldierUnit);
     }
 
     /// <summary>
@@ -161,7 +161,7 @@ public class Squad : Unit
     /// <param name="humanUnit">the corresponding human that we want to remove</param>
     void RemoveHuman(Unit humanUnit)
     {
-        humans.Remove(humanUnit);
+        _humans.Remove(humanUnit);
     }
 
     /// <summary>
@@ -170,12 +170,12 @@ public class Squad : Unit
     /// <param name="nbHumans">the number of humans to transform</param>
     public void TransformHuman(int nbHumans)
     {
-        if (nbHumans <= humans.Count)
+        if (nbHumans <= _humans.Count)
         {
             for (var i = 0; i < nbHumans; i++)
             {
                 // retreive the human at the specified index
-                var humanUnit = humans.ElementAt(i);
+                var humanUnit = _humans.ElementAt(i);
                
                 // remove the human from the human list
                 RemoveHuman(humanUnit);
@@ -184,7 +184,7 @@ public class Squad : Unit
                 humanUnit.Tag = Tag;
 
                 // AddSoldier((VampireSquad) humanUnit) ) (VampireSquad or ZombieSquad)
-                if (squadTag.Equals(TagManager.VampirePlayer))
+                if (Tag.Equals(TagManager.VampirePlayer))
                 {
                     // add the vampire to the soldier list
                     AddSoldier((VampireSquad) humanUnit);
@@ -206,14 +206,11 @@ public class Squad : Unit
     public void ReceiveDamage(int amountOfDamage)
     {
         // apply the damage to the first soldier in the list
-        // update the soldier hp
-            // if the soldier hp reach zero
-                // the soldier is destroyed
-                // and then dead soldier is removed in the soldier list
-        var topSoldier = soldiers.ElementAt(0);
-        topSoldier.Hp -= amountOfDamage;
-
-        Debug.Log(string.Format("{0} received {1} damage!",topSoldier.name, amountOfDamage));
+        foreach (var soldier in _soldiers)
+        {
+            soldier.Hp -= amountOfDamage;
+            Debug.Log(string.Format("{0} received {1} damage!", soldier.name, amountOfDamage));
+        }
     }
 
     void CaptureHuman(Unit unit)
@@ -233,10 +230,16 @@ public class Squad : Unit
         Debug.Log("Attacked the ennemy : " + targettedEnemySquad.Tag);
     }
 
+    /// <summary>
+    /// Compute to attack damage depending of the numbers of soldiers in the squad.
+    /// </summary>
+    /// <returns>the damage to apply to each enemy soldiers units</returns>
     int ComputeAttackDamage()
     {
-        // TODO improve the damage algorithm depending of the number of units in the soldiers list.
-        return Attack;
+        // LINQ + Resharper FTW!!!!!
+        var sumOfAttack = _soldiers.Sum(soldier => soldier.Attack);
+
+        return ( 1 + (sumOfAttack / _soldiers.Count));
     }
 
     #endregion
@@ -253,9 +256,5 @@ public class Squad : Unit
         return abandonnedUnits;
     }
 
-    public int NumberOfSoldiers()
-    {
-        return soldiers.Count();
-    }
     #endregion
 }
