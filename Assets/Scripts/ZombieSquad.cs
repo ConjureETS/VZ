@@ -11,7 +11,7 @@ public class ZombieSquad : Squad
     void Start()
     {
         InitializeSquad();
-        InitializeDefaultTag();
+        InitializeDefaultTagAndLayer();
         // initialize default hp
         //Hp = defaultHp;
         // initialize default attack
@@ -31,21 +31,26 @@ public class ZombieSquad : Squad
         }
     }
 
-    private void InitializeDefaultTag()
+    private void InitializeDefaultTagAndLayer()
     {
         try
         {
-            this.Tag = TagManager.ZombiePlayer; // set the tag to player 1       
+            this.Tag = TagLayerManager.ZombiePlayer; // set the tag to player 1      
+            this.Layer = TagLayerManager.ZombieLayerIndex;
         }
         catch (IndexOutOfRangeException ex)
         {
             Debug.LogError("Please set a vampire Tag, check the Tag & layers in the inspector!\n" + ex);
         }
 
-        // set the tag of the gameObject to zombie
+        // set the tag and the layer of the gameObject to vampire
         if (this.gameObject.tag != Tag)
         {
             this.gameObject.tag = Tag;
+        }
+        if (this.gameObject.layer != Layer)
+        {
+            this.gameObject.layer = Layer;
         }
     }
 
@@ -77,7 +82,7 @@ public class ZombieSquad : Squad
         if (this.Tag == unitComponent.Tag)
             return;
 
-        if (unitComponent.Tag.Equals(TagManager.Human))
+        if (unitComponent.Tag.Equals(TagLayerManager.Human))
         {
             CaptureHuman(unitComponent);
         }

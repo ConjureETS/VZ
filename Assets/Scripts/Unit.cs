@@ -14,12 +14,11 @@ public class Unit : MonoBehaviour
     void Start ()
     {
         IsCaptured = false;
-        // initialize default hp
         Hp = defaultHp;
-        // initialize default attack
         Attack = defaultAttack;
-        // initialize default team
         // initialize default specie
+        Tag = TagLayerManager.Human;
+        Layer = TagLayerManager.HumanLayerIndex;
         IsDead = false;
     }
 
@@ -72,14 +71,18 @@ public class Unit : MonoBehaviour
     }
 
     public int Attack { get; set; }
-    //public bool isAlly { get; set; }
-    //public bool isHuman { get; set; }
     public bool IsDead { get; set; }
 
-    public String Tag
+    public string Tag
     {
         get { return this.gameObject.tag; }
         set { gameObject.tag = value; }
+    }
+
+    public int Layer
+    {
+        get { return this.gameObject.layer; }
+        set { gameObject.layer = value; }
     }
 
     #endregion

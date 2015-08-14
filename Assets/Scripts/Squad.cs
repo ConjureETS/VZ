@@ -184,7 +184,7 @@ public class Squad : Unit
                 humanUnit.Tag = Tag;
 
                 // AddSoldier((VampireSquad) humanUnit) ) (VampireSquad or ZombieSquad)
-                if (Tag.Equals(TagManager.VampirePlayer))
+                if (Tag.Equals(TagLayerManager.VampirePlayer))
                 {
                     // add the vampire to the soldier list
                     AddSoldier((VampireSquad) humanUnit);
@@ -232,7 +232,7 @@ public class Squad : Unit
         //unit.Hp -= Attack; // we remove some hp of the unit that was 
         targettedEnemySquad.ReceiveDamage(ComputeAttackDamage());
 
-        Debug.Log("Attacked the ennemy : " + targettedEnemySquad.Tag);
+        Debug.Log("Attacked the enemy : " + targettedEnemySquad.Tag);
     }
 
     /// <summary>
