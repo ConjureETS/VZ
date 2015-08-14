@@ -134,6 +134,12 @@ public class Squad : Unit
             {
                 // retreive the human at the specified index
                 var humanUnit = _humans.ElementAt(i);
+                // reassign the human attributes
+                humanUnit.Tag = TagLayerManager.Human;
+                humanUnit.Layer = TagLayerManager.HumanLayerIndex;
+                humanUnit.gameObject.GetComponent<Rigidbody>().useGravity = true;
+                humanUnit.IsCaptured = false;
+
                 // add the human to the abandonned Unit list
                 AddAbandonnedHuman(humanUnit);
                 // remove the human from the humandUnit that was added to the abandonned unit list
@@ -219,6 +225,7 @@ public class Squad : Unit
         //Debug.Log(String.Format("Human parent before colision :{0}", unit.transform.name));
         unit.IsCaptured = true;
         unit.transform.parent = this.transform;
+        unit.transform.gameObject.GetComponent<Rigidbody>().useGravity = false;
         unit.transform.localPosition = new Vector3(0, 0, 0);
         //Debug.Log(String.Format("Human parent before colision :{0}", unit.transform.parent.name));
         AddHuman(unit);
