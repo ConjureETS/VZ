@@ -90,6 +90,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   y: 25
+  offsetZ: -5
   transitionDuration: .100000001
 --- !u!124 &12404998
 Behaviour:
