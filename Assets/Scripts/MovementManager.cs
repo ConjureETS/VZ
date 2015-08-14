@@ -3,26 +3,50 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
+/**
+ * gere les inputs
+ * 
+ * a placer sur les players
+*/
+
 public class MovementManager : MonoBehaviour
 {
 
-   public Queue<string> p1MovBuffer = new Queue<string>(4); // Buffer de mouvement pour le player 1
-   public Queue<string> p2MovBuffer = new Queue<string>(4); //Buffer de mouvement pour le player 2
+    public Queue<String> p1MovBuffer = new Queue<String>(4); // Buffer de mouvement pour le player 1
+    //public Queue<String> p2MovBuffer = new Queue<String>(4); //Buffer de mouvement pour le player 2
 
     // Use this for initialization
     void Awake()
     {
-        p1MovBuffer.Enqueue("Stop");
-        p2MovBuffer.Enqueue("Stop");
+
+        p1MovBuffer.Enqueue("Up");
+       // p2MovBuffer.Enqueue("Up");
+
+        p1MovBuffer.Enqueue("Right");
+       // p2MovBuffer.Enqueue("Right");
+
+        p1MovBuffer.Enqueue("Down");
+       // p2MovBuffer.Enqueue("Down");
+
+
+
     }
 
-    // Update is called once per frame
-    void Update()
+    void Update() 
     {
+       string[] test = p1MovBuffer.ToArray();
 
+
+       Debug.Log(test[0] + " " + test[1] + " " + test[2] + " " + test[3] + " ");
+    }
+    
+    void FixedUpdate()
+    {
         ReadMovement();
-        Debug.Log(p1MovBuffer.Peek() + "  " + p2MovBuffer.Peek());
 
+        Debug.Log(p1MovBuffer.Peek());
+
+        Debug.Log(Input.GetAxisRaw("Vertical1"));
     }
 
     void ReadMovement()
@@ -31,15 +55,15 @@ public class MovementManager : MonoBehaviour
         {
             p1MovBuffer.Enqueue("Up");
         }
-        else if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.A))
         {
             p1MovBuffer.Enqueue("Left");
         }
-        else if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.S))
         {
             p1MovBuffer.Enqueue("Down");
         }
-        else if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.D))
         {
             p1MovBuffer.Enqueue("Right");
         }
@@ -48,39 +72,58 @@ public class MovementManager : MonoBehaviour
         {
             p1MovBuffer.Enqueue("Up");
         }
-        else if (Input.GetKeyDown(KeyCode.J))
+        if (Input.GetKeyDown(KeyCode.J))
         {
             p1MovBuffer.Enqueue("Left");
         }
-        else if (Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.K))
         {
             p1MovBuffer.Enqueue("Down");
         }
-        else if (Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.L))
         {
             p1MovBuffer.Enqueue("Right");
         }
+        
+
+      //  Debug.Log(p1MovBuffer.First.ToString() + "  " + p2MovBuffer.First.ToString());
     }
 
-    string getNextDirection(int playerID) 
+    public string[] TransferBuffer(int playerId) 
     {
-        try
+       /* switch (playerId) 
         {
-            if (playerID == 1)
-            {
-                return p1MovBuffer.Dequeue();
-            }
-            else if (playerID == 2)
-            {
-                return p2MovBuffer.Dequeue();
-            }
-        }catch(InvalidOperationException exception)
-        {
-            Debug.LogError("Reached the end of the queue we stop by default!: " + exception);
+            case 1:
 
-            return "Stop";
-        }
-        return null;
+                fillBuffWithEmpty(1, 4 - p1MovBuffer.Count);
+                return p1MovBuffer.ToArray();
+                
+            case 2:
+                fillBuffWithEmpty(2, 4 - p2MovBuffer.Count);
+                return p2MovBuffer.ToArray();     
+        }*/
+
+
+        fillBuffWithEmpty(1, 4 - p1MovBuffer.Count);
+        return p1MovBuffer.ToArray();
     }
 
+    void fillBuffWithEmpty(int id, int num) 
+    {
+        for (int u = 0; u < num; u++) 
+        {
+            if(id == 1){
+                p1MovBuffer.Enqueue("Stop");
+            }
+           /* else if(id ==2){
+                p2MovBuffer.Enqueue("Stop");
+            }*/
+        }
+    
+    }
+
+    void ResetBuffer() 
+    {
+        p1MovBuffer = new Queue<string>(4);
+    }
 }
