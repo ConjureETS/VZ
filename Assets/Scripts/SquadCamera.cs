@@ -5,6 +5,7 @@ public class SquadCamera : MonoBehaviour {
 
     private Vector3 target;
     public float y = 25f; // store the height value since it will never change
+    public float offsetZ = -5f;
     
     public float transitionDuration = 2.5f;
 
@@ -35,7 +36,7 @@ public class SquadCamera : MonoBehaviour {
 
         float t = 0.0f;         
         Vector3 startingPos = transform.position;        
-        Vector3 destination = new Vector3( target.x, y, target.z );
+        Vector3 destination = new Vector3( target.x, y, target.z + offsetZ); // add the offset
 
         while (t < 1.0f) {
 
