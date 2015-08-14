@@ -12,82 +12,90 @@ using System;
 public class MovementManager : MonoBehaviour
 {
 
-    public Queue<String> p1MovBuffer = new Queue<String>(4); // Buffer de mouvement pour le player 1
-    //public Queue<String> p2MovBuffer = new Queue<String>(4); //Buffer de mouvement pour le player 2
+    public Queue<String> moveBuffer = new Queue<String>(4); // Buffer de mouvement
+
+
+    public const string UP = "Up";
+    public const string DOWN = "Down";
+    public const string LEFT = "Left";
+    public const string RIGHT = "Right";  
+
+
 
     // Use this for initialization
     void Awake()
     {
+        //test
+        moveBuffer.Enqueue("Up");
 
-        p1MovBuffer.Enqueue("Up");
-       // p2MovBuffer.Enqueue("Up");
+        moveBuffer.Enqueue("Right");
 
-        p1MovBuffer.Enqueue("Right");
-       // p2MovBuffer.Enqueue("Right");
-
-        p1MovBuffer.Enqueue("Down");
-       // p2MovBuffer.Enqueue("Down");
-
-
+        moveBuffer.Enqueue("Down");
 
     }
 
     void Update() 
     {
-       string[] test = p1MovBuffer.ToArray();
+       string[] test = moveBuffer.ToArray();
 
 
-       Debug.Log(test[0] + " " + test[1] + " " + test[2] + " " + test[3] + " ");
+       //Debug.Log(test[0] + " " + test[1] + " " + test[2]  + " ");
     }
     
     void FixedUpdate()
     {
-        ReadMovement();
+        //ReadMovement();
 
-        Debug.Log(p1MovBuffer.Peek());
+        //Debug.Log(moveBuffer.Peek());
 
-        Debug.Log(Input.GetAxisRaw("Vertical1"));
+        //Debug.Log(Input.GetAxisRaw("Vertical1"));
     }
 
     void ReadMovement()
     {
         if (Input.GetKeyDown(KeyCode.W))
         {
-            p1MovBuffer.Enqueue("Up");
+            moveBuffer.Enqueue("Up");
         }
         if (Input.GetKeyDown(KeyCode.A))
         {
-            p1MovBuffer.Enqueue("Left");
+            moveBuffer.Enqueue("Left");
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            p1MovBuffer.Enqueue("Down");
+            moveBuffer.Enqueue("Down");
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
-            p1MovBuffer.Enqueue("Right");
+            moveBuffer.Enqueue("Right");
         }
 
         if (Input.GetKeyDown(KeyCode.I))
         {
-            p1MovBuffer.Enqueue("Up");
+            moveBuffer.Enqueue("Up");
         }
         if (Input.GetKeyDown(KeyCode.J))
         {
-            p1MovBuffer.Enqueue("Left");
+            moveBuffer.Enqueue("Left");
         }
         if (Input.GetKeyDown(KeyCode.K))
         {
-            p1MovBuffer.Enqueue("Down");
+            moveBuffer.Enqueue("Down");
         }
         if (Input.GetKeyDown(KeyCode.L))
         {
-            p1MovBuffer.Enqueue("Right");
+            moveBuffer.Enqueue("Right");
         }
         
 
       //  Debug.Log(p1MovBuffer.First.ToString() + "  " + p2MovBuffer.First.ToString());
     }
+
+    public void EnqueuMove(string move){
+
+        moveBuffer.Enqueue(move);
+    }
+
 
     public string[] TransferBuffer(int playerId) 
     {
@@ -104,8 +112,8 @@ public class MovementManager : MonoBehaviour
         }*/
 
 
-        fillBuffWithEmpty(1, 4 - p1MovBuffer.Count);
-        return p1MovBuffer.ToArray();
+        fillBuffWithEmpty(1, 4 - moveBuffer.Count);
+        return moveBuffer.ToArray();
     }
 
     void fillBuffWithEmpty(int id, int num) 
@@ -113,7 +121,7 @@ public class MovementManager : MonoBehaviour
         for (int u = 0; u < num; u++) 
         {
             if(id == 1){
-                p1MovBuffer.Enqueue("Stop");
+                moveBuffer.Enqueue("Stop");
             }
            /* else if(id ==2){
                 p2MovBuffer.Enqueue("Stop");
@@ -124,6 +132,6 @@ public class MovementManager : MonoBehaviour
 
     void ResetBuffer() 
     {
-        p1MovBuffer = new Queue<string>(4);
+        moveBuffer = new Queue<string>(4);
     }
 }
