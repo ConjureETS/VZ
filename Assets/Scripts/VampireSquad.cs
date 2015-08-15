@@ -27,7 +27,7 @@ public class VampireSquad : Squad
         if (IsDead)
         {
             // TODO play dead animation before destroying unit
-            DestroyUnit();
+            DestroyUnit(DyingTime);
         }
     }
 

@@ -6,11 +6,14 @@ using JetBrains.Annotations;
 
 public class Unit : MonoBehaviour 
 {
-    private LinkedList<Command> commandList;
+  
     public int defaultHp = 250;
     public int defaultAttack = 100;
     public float LerpSpeed = 1;
     public int destinationGap = 5;
+    public float DyingTime = 1.0f;
+
+    private LinkedList<Command> commandList;
     private int _hp; // the unit hp
     private CharacterBehavior _character;
     // Use this for initialization
@@ -28,7 +31,11 @@ public class Unit : MonoBehaviour
 
     void Update()
     {
-        if (IsCaptured)
+        if (IsDead)
+        {
+            DestroyUnit(DyingTime);
+        }
+        else if (IsCaptured)
         {
            var gapVector = new Vector3(TargetDestination.position.x + destinationGap, TargetDestination.position.y,TargetDestination.position.z + destinationGap);
             // TODO improve the translation position so that every unit captured are around the squad leader and not at only one position.
@@ -59,11 +66,16 @@ public class Unit : MonoBehaviour
     /// <summary>
     /// Destroy the current unit
     /// </summary>
-    protected void DestroyUnit()
+    protected IEnumerator DestroyUnit(float dyingTime)
     {
         //TODO First play dead animation
-        // then destroy the game object
-        Destroy(this.transform.gameObject);
+        // retreive the character behavior object, so that we can access it's animation properties...
+        var character = GetComponent<CharacterBehavior>();
+        // play the death animation 
+        character.PlayDeathAnimation();
+        yield return new WaitForSeconds(character.CurrrentAnimationLength());
+        // then destroy the game object only 3 seconds after the animation
+        Destroy(this.transform.gameObject, dyingTime);
     }
 
     #region Unit properties
@@ -74,18 +86,12 @@ public class Unit : MonoBehaviour
 
         set
         {
-            if (Hp < 0)
+            _hp = value > defaultHp ? defaultHp : value;
+
+            if (Hp <= 0)
             {
-                _hp = 0;
-                IsDead = true;
-            }
-            else if (value > defaultHp)
-            {
-                _hp = defaultHp;
-            }
-            else
-            {
-                _hp = value;
+                //IsDead = true;
+                StartCoroutine(DestroyUnit(DyingTime));
             }
         }
     }

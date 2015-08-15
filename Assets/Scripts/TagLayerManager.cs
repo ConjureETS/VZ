@@ -7,7 +7,6 @@ public class TagLayerManager : MonoBehaviour
 {
 	// Use this for initialization
     private static readonly string[] availableTags = UnityEditorInternal.InternalEditorUtility.tags;
-    private static readonly string[] availableLayers = UnityEditorInternal.InternalEditorUtility.layers;
     // TODO FIND A WAY TO ADD EXCEPTION ERROR IF THE USER OMMIT TO ADD TAGS!!!
     public static string Human = availableTags[7];
     public static string VampirePlayer = availableTags[8];

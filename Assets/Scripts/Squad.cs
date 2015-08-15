@@ -21,7 +21,7 @@ public class Squad : Unit
     /// <summary>
     /// List of abandonned units. (this list is accessible for both teams)
     /// </summary>
-    private List<Unit> abandonnedUnits;
+    private List<Unit> _abandonnedUnits;
     
     /// <summary>
     /// Index of the first soldier in the list.
@@ -40,6 +40,7 @@ public class Squad : Unit
     {
         _humans = new List<Unit>();
         _soldiers = new List<Squad>();
+        _abandonnedUnits = new List<Unit>();
     }
     
     // Update is called once per frame
@@ -48,11 +49,15 @@ public class Squad : Unit
         // TODO execute movement command
         // TODO Check if all the units are dead
             // if yes destroy 
-        if (_soldiers.Count != 0) return;
-        // first release all humans ...
-        AbandonUnits(_humans.Count);
-        // then we destroy the squad
-        DestroyUnit();
+        if (_soldiers.Count == 0)
+        {
+            // first release all humans ...
+            AbandonUnits(_humans.Count);
+            // then we destroy the squad
+            //DestroyUnit();
+            IsDead = true;
+        }
+      
     }
 
     #region squad related functions
@@ -82,6 +87,7 @@ public class Squad : Unit
     /// <param name="soldierUnit">the soldier unit to add in the soldier unit list</param>
     void AddSoldier(Squad soldierUnit)
     {
+        soldierUnit.IsCaptured = false;
         _soldiers.Add(soldierUnit);
     }
 
@@ -91,7 +97,8 @@ public class Squad : Unit
     /// <param name="humanUnit">the human to add in the abandonned unit list</param>
     void AddAbandonnedHuman(Unit humanUnit)
     {
-        abandonnedUnits.Add(humanUnit);
+        humanUnit.IsCaptured = false;
+        _abandonnedUnits.Add(humanUnit);
     }
 
     /// <summary>
@@ -100,7 +107,7 @@ public class Squad : Unit
     /// <param name="humanUnit">the human unit to remove</param>
     void RemoveAbandonnedHuman(Unit humanUnit)
     {
-        abandonnedUnits.Remove(humanUnit);
+        _abandonnedUnits.Remove(humanUnit);
     }
 
     /// <summary>
@@ -118,6 +125,7 @@ public class Squad : Unit
             soldier.Hp += soldier.Hp * ( 1 + percentageOfHpToHeal );
         }
 
+        humanUnit.GetComponent<CharacterBehavior>().PlayFetchedAnimation();
         // dispose of the human unit
         RemoveHuman(humanUnit);
     }
@@ -138,7 +146,6 @@ public class Squad : Unit
                 humanUnit.Tag = TagLayerManager.Human;
                 humanUnit.Layer = TagLayerManager.HumanLayerIndex;
                 humanUnit.gameObject.GetComponent<Rigidbody>().useGravity = true;
-                humanUnit.IsCaptured = false;
 
                 // add the human to the abandonned Unit list
                 AddAbandonnedHuman(humanUnit);
@@ -188,7 +195,7 @@ public class Squad : Unit
 
                 // set the human tag to the same as the squad
                 humanUnit.Tag = Tag;
-
+              
                 // AddSoldier((VampireSquad) humanUnit) ) (VampireSquad or ZombieSquad)
                 if (Tag.Equals(TagLayerManager.VampirePlayer))
                 {
@@ -221,15 +228,14 @@ public class Squad : Unit
 
     protected void CaptureHuman(Unit unit)
     {
-        // make the human a child of the squad game object
-        //Debug.Log(String.Format("Human parent before colision :{0}", unit.transform.name));
-        unit.IsCaptured = true;
-        //unit.transform.parent = this.transform;
+        // set the position of the squad as a target, so that 
+        // the unit would always follow the squad leader
         unit.TargetDestination = this.transform;
-        //unit.transform.gameObject.GetComponent<Rigidbody>().useGravity = false;
-        //unit.transform.localPosition = new Vector3(0, 0, 0);
-        //Debug.Log(String.Format("Human parent before colision :{0}", unit.transform.parent.name));
+        // specify that the unit is captured to that the captured animation plays at the next update.
+        unit.IsCaptured = true;
+        // add the caught human in the caught list.
         AddHuman(unit);
+
         Debug.Log(string.Format("{0} joined the squad of : {1} ", unit.gameObject.name, transform.gameObject.name));
     }
 
@@ -266,7 +272,7 @@ public class Squad : Unit
     /// <returns></returns>
     public List<Unit> GetAbandonnedUnits()
     {
-        return abandonnedUnits;
+        return _abandonnedUnits;
     }
 
     #endregion

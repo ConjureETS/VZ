@@ -27,7 +27,7 @@ public class ZombieSquad : Squad
         if (IsDead)
         {
             // TODO play dead animation before destroying unit
-            DestroyUnit();
+            DestroyUnit(DyingTime);
         }
     }
 
