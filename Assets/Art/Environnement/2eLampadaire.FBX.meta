@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 5de7d2599a71fee4f9d35214c806bfc1
-timeCreated: 1439577195
+guid: 7261fa5f9b0af1748bd09300ac3f3b11
+timeCreated: 1439588005
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
@@ -10,6 +10,7 @@ ModelImporter:
     2300000: //RootNode
     3300000: //RootNode
     4300000: Cylinder006
+    9500000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
@@ -67,7 +68,7 @@ ModelImporter:
     feetSpacing: 0
     rootMotionBoneName: 
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   additionalBone: 0
   userData: 
   assetBundleName: 
