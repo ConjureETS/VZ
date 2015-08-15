@@ -9,7 +9,10 @@ public class Unit : MonoBehaviour
     private LinkedList<Command> commandList;
     public int defaultHp = 250;
     public int defaultAttack = 100;
+    public float LerpSpeed = 1;
+    public int destinationGap = 5;
     private int _hp; // the unit hp
+    private CharacterBehavior _character;
     // Use this for initialization
     void Start ()
     {
@@ -20,6 +23,23 @@ public class Unit : MonoBehaviour
         Tag = TagLayerManager.Human;
         Layer = TagLayerManager.HumanLayerIndex;
         IsDead = false;
+        _character = GetComponent<CharacterBehavior>();
+    }
+
+    void Update()
+    {
+        if (IsCaptured)
+        {
+           var gapVector = new Vector3(TargetDestination.position.x + destinationGap, TargetDestination.position.y,TargetDestination.position.z + destinationGap);
+            // TODO improve the translation position so that every unit captured are around the squad leader and not at only one position.
+            transform.position = Vector3.Lerp(transform.position, gapVector, LerpSpeed * 3.0f * Time.deltaTime);
+            //See more at: http://unitydojo.blogspot.ca/2014/03/how-to-use-lerp-in-unity-like-boss.html#sthash.ueWlstRk.dpuf*/
+            _character.PlayCaptureAnimation(IsCaptured);
+        }
+        else
+        {
+            _character.PlayCaptureAnimation(IsCaptured);
+        }
     }
 
     /// <summary>
@@ -72,6 +92,8 @@ public class Unit : MonoBehaviour
 
     public int Attack { get; set; }
     public bool IsDead { get; set; }
+
+    public Transform TargetDestination { get; set; }
 
     public string Tag
     {

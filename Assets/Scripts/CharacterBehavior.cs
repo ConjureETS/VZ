@@ -90,7 +90,7 @@ public class CharacterBehavior : MonoBehaviour
 
 	void FixedUpdate()
 	{
-	    PlayRunAnimation(true);
+	    //PlayRunAnimation(true);
         //PlayRunAnimation(false);
         //PlayAttackAnimation(true);
         //PlayAttackAnimation(false);

@@ -224,9 +224,10 @@ public class Squad : Unit
         // make the human a child of the squad game object
         //Debug.Log(String.Format("Human parent before colision :{0}", unit.transform.name));
         unit.IsCaptured = true;
-        unit.transform.parent = this.transform;
-        unit.transform.gameObject.GetComponent<Rigidbody>().useGravity = false;
-        unit.transform.localPosition = new Vector3(0, 0, 0);
+        //unit.transform.parent = this.transform;
+        unit.TargetDestination = this.transform;
+        //unit.transform.gameObject.GetComponent<Rigidbody>().useGravity = false;
+        //unit.transform.localPosition = new Vector3(0, 0, 0);
         //Debug.Log(String.Format("Human parent before colision :{0}", unit.transform.parent.name));
         AddHuman(unit);
         Debug.Log(string.Format("{0} joined the squad of : {1} ", unit.gameObject.name, transform.gameObject.name));
