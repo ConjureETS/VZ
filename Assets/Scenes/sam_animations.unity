@@ -87,6 +87,56 @@ NavMeshSettings:
     cellSize: .166666672
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &237808464 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100080, guid: 927610a088e26e54893541b8be6c050c, type: 3}
+  m_PrefabInternal: {fileID: 749299731}
+--- !u!136 &237808467
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 237808464}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 1.5
+  m_Height: 5
+  m_Direction: 1
+  m_Center: {x: 0, y: 2.54999995, z: 0}
+--- !u!54 &237808468
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 237808464}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: Infinity
+  m_AngularDrag: Infinity
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 84
+  m_CollisionDetection: 0
+--- !u!114 &237808469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 237808464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74f0a139db076b941b792c3ed8936539, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimationSpeed: 1.5
+  LookSmoother: 3
+  ForwardSpeed: 7
+  BackwardSpeed: 2
+  RightSpeed: 7
+  LeftSpeed: 7
+  RotateSpeed: 2
 --- !u!1 &614457924
 GameObject:
   m_ObjectHideFlags: 0
@@ -190,6 +240,10 @@ Prefab:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: d02531a894e458e46a8e40c930cdc460, type: 2}
+    - target: {fileID: 9500000, guid: 927610a088e26e54893541b8be6c050c, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 927610a088e26e54893541b8be6c050c, type: 3}
   m_IsPrefabParent: 0
