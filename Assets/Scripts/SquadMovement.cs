@@ -29,7 +29,7 @@ public class SquadMovement : MonoBehaviour {
 	void Start () {
         movementBuffer[4] = "stop";
 
-        getNewBuffet();
+        getNewBuffer();
 	}
 	
 	// Update is called once per frame
@@ -44,7 +44,7 @@ public class SquadMovement : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.Space)) 
         {
-            getNewBuffet();
+            getNewBuffer();
         }
 
 	}
@@ -91,7 +91,7 @@ public class SquadMovement : MonoBehaviour {
         return (int)dir;
     }
 
-   public void getNewBuffet() 
+   public void getNewBuffer() 
    {
        string[] newBuffer = mm.TransferBuffer(0);
        for (int i = 0; i < 4; i++)
