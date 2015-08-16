@@ -18,8 +18,8 @@ public class PlayerController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         currentSquadIndex = 0;
-        squadCamera.SetTarget(squads[currentSquadIndex].gameObject.transform.position);
-        
+        //squadCamera.SetTarget(squads[currentSquadIndex].gameObject.transform.position);
+        squadCamera.SetTarget(squads[currentSquadIndex].gameObject.transform);
         movementManager = GetComponent<MovementManager>();
 
 	}
@@ -30,15 +30,15 @@ public class PlayerController : MonoBehaviour {
         // switching between squads
         if (Input.GetButtonDown("Opt1-" + (int)player)) {
             currentSquadIndex = 0;
-            squadCamera.SetTarget(squads[0].gameObject.transform.position);            
+            squadCamera.SetTarget(squads[0].transform);            
         }
         if (Input.GetButtonDown("Opt2-" + (int)player)) {
             currentSquadIndex = 1;
-            squadCamera.SetTarget(squads[1].gameObject.transform.position);            
+            squadCamera.SetTarget(squads[1].transform);                        
         }
         if (Input.GetButtonDown("Opt3-" + (int)player)) {
             currentSquadIndex = 2;
-            squadCamera.SetTarget(squads[2].gameObject.transform.position); 
+            squadCamera.SetTarget(squads[2].transform);             
         }
 
         // movements
