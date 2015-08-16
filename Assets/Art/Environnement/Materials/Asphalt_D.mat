@@ -82,7 +82,7 @@ Material:
         first:
           name: _SpecGlossMap
         second:
-          m_Texture: {fileID: 2800000, guid: a1e88f14d0503e649a2e6dcf0b4ccd2a, type: 3}
+          m_Texture: {fileID: 2800000, guid: b6ba7a1625c36ac47866f6e88f1f1993, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats:
@@ -109,7 +109,7 @@ Material:
       data:
         first:
           name: _Glossiness
-        second: .296000004
+        second: .404000014
       data:
         first:
           name: _BumpScale
@@ -133,7 +133,7 @@ Material:
       data:
         first:
           name: _Metallic
-        second: 0
+        second: .307000011
     m_Colors:
       data:
         first:
@@ -146,4 +146,4 @@ Material:
       data:
         first:
           name: _SpecColor
-        second: {r: .200000003, g: .200000003, b: .200000003, a: 1}
+        second: {r: .139705896, g: .139705896, b: .139705896, a: 1}
