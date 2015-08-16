@@ -446,8 +446,8 @@ GameObject:
   - 4: {fileID: 451766}
   - 95: {fileID: 9503846}
   - 54: {fileID: 5438542}
-  - 136: {fileID: 13693332}
   - 135: {fileID: 13537670}
+  - 136: {fileID: 13693332}
   - 114: {fileID: 11486528}
   - 114: {fileID: 11453980}
   - 114: {fileID: 11489930}
@@ -888,7 +888,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 175210}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.81066799, y: 0, z: 3.83980489}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 406962}
