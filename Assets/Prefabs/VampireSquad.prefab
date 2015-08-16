@@ -450,6 +450,7 @@ GameObject:
   - 135: {fileID: 13537670}
   - 114: {fileID: 11486528}
   - 114: {fileID: 11453980}
+  - 114: {fileID: 11489930}
   m_Layer: 0
   m_Name: VampireSquad
   m_TagString: VampirePlayer
@@ -1205,6 +1206,7 @@ MonoBehaviour:
   defaultAttack: 100
   LerpSpeed: 1
   destinationGap: 5
+  DyingTime: 1
 --- !u!114 &11486528
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1216,6 +1218,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74f0a139db076b941b792c3ed8936539, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11489930
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 175210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2aef95dc5d20b9940b40da72e3a41995, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: .100000001
+  dir: 5
+  movementManager: {fileID: 0}
 --- !u!135 &13537670
 SphereCollider:
   m_ObjectHideFlags: 1

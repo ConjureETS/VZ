@@ -29,6 +29,7 @@ GameObject:
   - 136: {fileID: 13692602}
   - 114: {fileID: 11417522}
   - 114: {fileID: 11496670}
+  - 114: {fileID: 11412352}
   m_Layer: 0
   m_Name: ZombieSquad
   m_TagString: ZombiePlayer
@@ -1190,6 +1191,20 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &11412352
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 104082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2aef95dc5d20b9940b40da72e3a41995, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: .100000001
+  dir: 5
+  movementManager: {fileID: 0}
 --- !u!114 &11417522
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1205,6 +1220,7 @@ MonoBehaviour:
   defaultAttack: 100
   LerpSpeed: 1
   destinationGap: 5
+  DyingTime: 1
 --- !u!114 &11496670
 MonoBehaviour:
   m_ObjectHideFlags: 1
