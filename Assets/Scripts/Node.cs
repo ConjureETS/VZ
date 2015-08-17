@@ -18,7 +18,7 @@ public class Node : MonoBehaviour {
     }
 
      
-	void OnDrawGizmosSelected() {
+	void OnDrawGizmos() {
         if (n_up != null) {
 			Gizmos.color = Color.red;
 			Gizmos.DrawLine(pos, n_up.pos);
