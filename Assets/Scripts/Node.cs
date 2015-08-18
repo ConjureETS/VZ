@@ -7,9 +7,7 @@ public class Node : MonoBehaviour {
 	public Node n_left;
 	public Node n_down;
 	public Node n_right;
-
-    SquadMovement validSquad;
-
+    
     public Vector3 pos;
 
     void Start()
@@ -35,20 +33,18 @@ public class Node : MonoBehaviour {
 	}
 
     void OnTriggerEnter(Collider other)
-    {
+    {   
+        
         if (other.tag == "VampirePlayer" || other.tag == "ZombiePlayer") 
-        { 
-           validSquad = other.GetComponent<SquadMovement>();
-            Node newTarget = sendNextNode(validSquad.ChangeDirection());
-           validSquad.changeTarget(newTarget);
-           Debug.Log((int)validSquad.dir);
+        {
+            Unit unit = other.GetComponent<Unit>();
+            int direction = unit.DequeueMove();
+
+            Node newTarget = sendNextNode( direction );
+            unit.target = newTarget;
         }
     }
 
-    void OnTriggerExit(Collider other) 
-    {
-        validSquad = null;
-    }
 
     public Node sendNextNode(int direction) 
     {
@@ -87,9 +83,8 @@ public class Node : MonoBehaviour {
                 }
                 break;
 
-            case 5: //stop 
+            default : 
 
-                //validSquad.UpdateDirection();
                 return null;
         }
 

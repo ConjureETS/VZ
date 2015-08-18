@@ -16,6 +16,17 @@ public class Unit : MonoBehaviour
     private LinkedList<Command> commandList;
     private int _hp; // the unit hp
     private CharacterBehavior _character;
+
+
+    // movements
+    public enum direction : int { up = 1, down = 2, left = 3, right = 4 };
+    public float speed = 0.5f;
+    public int maxQueueSize = 5;
+    public bool overwriteQueue = false; 
+
+    private Queue<int> queue = new Queue<int>();
+
+
     // Use this for initialization
     void Start ()
     {
@@ -27,10 +38,15 @@ public class Unit : MonoBehaviour
         Layer = TagLayerManager.HumanLayerIndex;
         IsDead = false;
         _character = GetComponent<CharacterBehavior>();
+
+
+        queue.Enqueue(4); //TEST
+
     }
 
     void Update()
     {
+
         if (IsDead)
         {
             DestroyUnit(DyingTime);
@@ -46,6 +62,21 @@ public class Unit : MonoBehaviour
         else
         {
             _character.PlayCaptureAnimation(IsCaptured);
+
+
+            // move towards the target node
+            if (target != null) {
+                
+                _character.PlayRunAnimation(true);
+                transform.LookAt(target.transform);
+                transform.position = Vector3.MoveTowards(transform.position, target.pos, speed);
+            }
+            else {
+                // if we don't have a target, then we're not moving
+                _character.PlayRunAnimation(false);
+            }
+
+
         }
     }
 
@@ -76,6 +107,47 @@ public class Unit : MonoBehaviour
         yield return new WaitForSeconds(character.CurrrentAnimationLength());
         // then destroy the game object only 3 seconds after the animation
         Destroy(this.transform.gameObject, dyingTime);
+    }
+
+    public void EnqueueMove(int move) {
+
+        //TODO: add logic to handle max size
+
+        // overwrite the queue on first new move input if we switched to a new squad
+        if (overwriteQueue) {
+            queue.Clear();
+        }
+        overwriteQueue = false;
+        printQueue();
+        queue.Enqueue(move);
+    }
+
+    public int DequeueMove() {
+        int move;
+        
+        // if there is only one move left, we do not remove it
+        // so the unit keeps moving in the same direction
+        if (queue.Count > 1) {
+            move = queue.Dequeue();
+        }
+        else if( queue.Count == 1){
+            move = queue.Peek();
+        }
+        else {
+            move = 0;
+        }
+        printQueue();
+        return move;
+
+    }
+
+    // debug function for queue
+    private void printQueue() {
+        string queuestr = "queue size: " + queue.Count + " ==> ";
+        foreach (int m in queue) {
+            queuestr += m + ", ";
+        }
+        Debug.Log(queuestr);
     }
 
     #region Unit properties
@@ -112,6 +184,8 @@ public class Unit : MonoBehaviour
         get { return this.gameObject.layer; }
         set { gameObject.layer = value; }
     }
+
+    public Node target { get; set; }
 
     #endregion
 

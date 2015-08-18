@@ -29,6 +29,20 @@ public class VampireSquad : Squad
             // TODO play dead animation before destroying unit
             DestroyUnit(DyingTime);
         }
+        else {
+
+            if (target != null) {
+
+                Vector3 newTarget = new Vector3(target.pos.x, transform.position.y, target.pos.z);
+
+                transform.LookAt(newTarget);
+                
+                transform.position = Vector3.MoveTowards(transform.position, newTarget, speed);
+                Debug.Log("I tried to move to :" + target.pos);
+            }
+        }
+
+
     }
 
     private void InitializeDefaultTagAndLayer()

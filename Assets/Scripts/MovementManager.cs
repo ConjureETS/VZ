@@ -29,8 +29,11 @@ public class MovementManager : MonoBehaviour
         moveBuffer.Enqueue("Up");
 
         moveBuffer.Enqueue("Right");
+        moveBuffer.Enqueue("Up");
 
         moveBuffer.Enqueue("Down");
+        moveBuffer.Enqueue("Down");
+
 
     }
 
@@ -51,45 +54,7 @@ public class MovementManager : MonoBehaviour
         //Debug.Log(Input.GetAxisRaw("Vertical1"));
     }
 
-    void ReadMovement()
-    {
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            moveBuffer.Enqueue("Up");
-        }
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            moveBuffer.Enqueue("Left");
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            moveBuffer.Enqueue("Down");
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            moveBuffer.Enqueue("Right");
-        }
-
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            moveBuffer.Enqueue("Up");
-        }
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            moveBuffer.Enqueue("Left");
-        }
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            moveBuffer.Enqueue("Down");
-        }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            moveBuffer.Enqueue("Right");
-        }
-        
-
-      //  Debug.Log(p1MovBuffer.First.ToString() + "  " + p2MovBuffer.First.ToString());
-    }
+    
 
     public void EnqueuMove(string move){
 
@@ -130,7 +95,7 @@ public class MovementManager : MonoBehaviour
     
     }
 
-    void ResetBuffer() 
+    public void ResetBuffer() 
     {
         moveBuffer = new Queue<string>(4);
     }

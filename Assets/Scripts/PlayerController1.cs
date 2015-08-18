@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController1 : MonoBehaviour {
 
     public enum Player { Player1 = 1, Player2 = 2 };
     public Player player;
@@ -12,15 +12,11 @@ public class PlayerController : MonoBehaviour {
 
     private float lastHorizontalAxis = 0f;
     private float lastVerticalAxis = 0f;
-
-    MovementManager movementManager;
-
+    
 	// Use this for initialization
 	void Start () {
         currentSquadIndex = 0;
-        //squadCamera.SetTarget(squads[currentSquadIndex].gameObject.transform.position);
         squadCamera.SetTarget(squads[currentSquadIndex].gameObject.transform);
-        movementManager = GetComponent<MovementManager>();
 
 	}
 	
@@ -29,20 +25,27 @@ public class PlayerController : MonoBehaviour {
 
         // switching between squads
         if (Input.GetButtonDown("Opt1-" + (int)player)) {
+            if (currentSquadIndex != 0) {
+                squads[0].overwriteQueue = true;
+            }
             currentSquadIndex = 0;
-            squadCamera.SetTarget(squads[0].transform);
-            movementManager.ResetBuffer();
         }
         if (Input.GetButtonDown("Opt2-" + (int)player)) {
+            if (currentSquadIndex != 1) {
+                squads[1].overwriteQueue = true;
+            }
             currentSquadIndex = 1;
-            squadCamera.SetTarget(squads[1].transform);
-            movementManager.ResetBuffer();
         }
         if (Input.GetButtonDown("Opt3-" + (int)player)) {
+            if (currentSquadIndex != 2) {
+                squads[2].overwriteQueue = true;
+            } 
             currentSquadIndex = 2;
-            squadCamera.SetTarget(squads[2].transform);
-            movementManager.ResetBuffer();
         }
+
+        squadCamera.SetTarget(squads[currentSquadIndex].transform);
+
+
 
         // movements
 
@@ -50,10 +53,10 @@ public class PlayerController : MonoBehaviour {
         if (horizontalAxis != 0 && horizontalAxis != lastHorizontalAxis) { // only enqueue a move when it is a new key press
             
             if (horizontalAxis == 1f) {
-                movementManager.EnqueuMove(MovementManager.RIGHT);
+                squads[currentSquadIndex].EnqueueMove((int)Unit.direction.right);
             }
             else if (horizontalAxis == -1f) {
-                movementManager.EnqueuMove(MovementManager.LEFT);
+                squads[currentSquadIndex].EnqueueMove((int)Unit.direction.left);
             }
 
         }
@@ -63,10 +66,10 @@ public class PlayerController : MonoBehaviour {
         if (verticalAxis != 0 && verticalAxis != lastVerticalAxis) { // only enqueue a move when it is a new key press
             
             if (verticalAxis == 1f) {
-                movementManager.EnqueuMove(MovementManager.UP);
+                squads[currentSquadIndex].EnqueueMove((int)Unit.direction.up);
             }
             else if (verticalAxis == -1f) {
-                movementManager.EnqueuMove(MovementManager.DOWN);
+                squads[currentSquadIndex].EnqueueMove((int)Unit.direction.down);
             }
 
         }

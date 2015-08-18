@@ -91,7 +91,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   y: 25
   offsetZ: -5
-  transitionDuration: .100000001
+  transitionDuration: .400000006
 --- !u!124 &12404998
 Behaviour:
   m_ObjectHideFlags: 1

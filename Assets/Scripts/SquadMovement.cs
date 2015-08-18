@@ -12,7 +12,7 @@ using System;
 
 public class SquadMovement : MonoBehaviour {
 
-    public float speed;
+    public float speed = 0.1f;
 
     String[] movementBuffer = new String[5];
 
@@ -21,7 +21,7 @@ public class SquadMovement : MonoBehaviour {
     public enum direction : int { up = 1, down = 2, left = 3, right = 4, stop = 5 };
     public direction dir = direction.stop;
 
-    public MovementManager mm;
+    public MovementManager movementManager;
 
     Node target;
 
@@ -36,9 +36,9 @@ public class SquadMovement : MonoBehaviour {
 	void Update () {
         if(target!=null)
         {
-           
+            transform.LookAt(target.transform);
             transform.position = Vector3.MoveTowards(transform.position, target.pos, speed);
-        
+            Debug.Log("I tried to move to :" + target.pos);
         }
        
 
@@ -83,7 +83,7 @@ public class SquadMovement : MonoBehaviour {
 
         movementBuffer[bufferIndex] = "stop";
 
-        if (bufferIndex < 5) 
+        if (bufferIndex < 4) 
         {
             bufferIndex++;
         }
@@ -93,7 +93,7 @@ public class SquadMovement : MonoBehaviour {
 
    public void getNewBuffer() 
    {
-       string[] newBuffer = mm.TransferBuffer(0);
+       string[] newBuffer = movementManager.TransferBuffer(0);
        for (int i = 0; i < 4; i++)
        {
            movementBuffer[i] = newBuffer[i];

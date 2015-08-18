@@ -46,6 +46,8 @@ public class Squad : Unit
     // Update is called once per frame
     void Update () 
     {
+        // update is overriden in VampireSquad and ZombieSquad
+
         // TODO execute movement command
         // TODO Check if all the units are dead
             // if yes destroy 
