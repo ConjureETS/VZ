@@ -38,10 +38,6 @@ public class Unit : MonoBehaviour
 
     void Update()
     {
-       /* if (IsDead)
-        {
-            DestroyUnit(DyingTime);
-        }*/
         if (IsCaptured)
         {
            var gapVector = new Vector3(TargetDestination.position.x + DestinationGap, TargetDestination.position.y,TargetDestination.position.z + DestinationGap);
@@ -63,7 +59,7 @@ public class Unit : MonoBehaviour
         isDamaged = true;
         CurrentHP -= amountOfDamage;
 
-//        HealthSlider.value = CurrentHP;
+        //HealthSlider.value = CurrentHP;
 
         // TODO play hurt animation
         // TODO play hurt sound
@@ -77,7 +73,7 @@ public class Unit : MonoBehaviour
     public void Death()
     {
         IsDead = true;
-        _character.PlayDeathAnimation();
+        //_character.PlayDeathAnimation();
         // TODO play death sound
         // TODO disable this gameobject movements.
         Debug.Log("Entered death function!");
@@ -105,11 +101,9 @@ public class Unit : MonoBehaviour
     {
         //TODO First play dead animation
         // retrieve the character behavior object, so that we can access it's animation properties...
-        //var character = GetComponent<CharacterBehavior>();
         // play the death animation 
-        //character.PlayDeathAnimation();
+        _character.PlayDeathAnimation();
         yield return new WaitForSeconds(_character.CurrrentAnimationLength());
-
 
         // then destroy the game object only 3 seconds after the animation
         //Destroy(this.transform.gameObject, dyingTime);
@@ -124,12 +118,6 @@ public class Unit : MonoBehaviour
         set
         {
             _currentHp = value > StartingHealth ? StartingHealth : value;
-
-           /* if (CurrentHP <= 0)
-            {
-                IsDead = true;
-                StartCoroutine(DestroyUnit(DyingTime));
-            }*/
         }
     }
 

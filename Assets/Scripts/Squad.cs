@@ -48,17 +48,6 @@ public class Squad : Unit
         _timer = 0f;
     }
 
-    //void Awake()
-    //{
-        
-       /* InitializeSquad();
-        InitializeDefaultTagAndLayer();
-        CurrentHP = 255;
-        Debug.Log("Current HP" + CurrentHP) ;
-        Attack = ComputeAttackDamage();
-        _enemySquad = null;
-        _timer = 0f;*/
-    //}
     // Update is called once per frame
     void Update ()
     {
@@ -79,17 +68,13 @@ public class Squad : Unit
         if (_numberOfAliveSoldiers > 0) return;
         // first release all humans ...
         AbandonUnits(Humans.Count);
-        // then we destroy the squad
-        //DestroyUnit();
         IsDead = true;
     }
 
     void OnTriggerEnter(Collider collider)
     {
         if (IsDead) return;
-        //var objectTag = collider.gameObject;
-        // check if the game object have an attached Unit class
-        //switch(objectTag.GetType())
+       
         var unitComponent = collider.GetComponent<Unit>();
 
         if (unitComponent == null)
@@ -113,31 +98,20 @@ public class Squad : Unit
         {
             if (unitComponent.IsDead)
                 return;
+
             _playerInRange = true;
             _enemySquad = collider.GetComponent<Squad>();
-
-            /* try
-                {
-                    AttackEnemySquad(unitComponent as Squad);
-                }
-                catch (InvalidCastException exception)
-                {
-                    Debug.LogError(exception.ToString());
-                    //throw;
-                }*/
-
         }
     }
 
     void OnTriggerExit(Collider collider)
     {
-        if (collider.gameObject.tag != Tag && collider.gameObject.tag != TagLayerManager.Human)
-        {
-            _playerInRange = false;
-            this.gameObject.GetComponent<CharacterBehavior>().PlayAttackAnimation(false);
-            _enemySquad = null;
-           // collider.GetComponent<CharacterBehavior>().PlayAttackAnimation(false);
-        }
+        if (collider.gameObject.tag == Tag || collider.gameObject.tag == TagLayerManager.Human)
+            return;
+
+        _playerInRange = false;
+        this.gameObject.GetComponent<CharacterBehavior>().PlayAttackAnimation(false);
+        _enemySquad = null;
     }
 
     #endregion
@@ -308,17 +282,6 @@ public class Squad : Unit
                 humanUnit.Tag = Tag;
               
                 AddSoldier(humanUnit as Squad);
-                // AddSoldier((VampireSquad) humanUnit) ) (VampireSquad or ZombieSquad)
-                /*if (Tag.Equals(TagLayerManager.VampirePlayer))
-                {
-                    // add the vampire to the soldier list
-                    AddSoldier((VampireSquad) humanUnit);
-                }
-                else
-                {
-                    // add the zombie to the soldier list
-                    AddSoldier((ZombieSquad)humanUnit);
-                }*/
             }
         }
         else
@@ -374,10 +337,6 @@ public class Squad : Unit
                 soldier.GetComponent<CharacterBehavior>().PlayAttackAnimation(false);
             }
         }
-        //TODO improve this method add the total of squad damage or to compute the reduce of hp, etc...
-        // compute the amount of hp reduced to this unit
-        //unit.Hp -= Attack; // we remove some hp of the unit that was 
-       // targettedEnemySquad.ReceiveDamage(ComputeAttackDamage());
     }
 
     /// <summary>
