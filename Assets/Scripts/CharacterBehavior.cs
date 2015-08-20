@@ -18,7 +18,7 @@ public class CharacterBehavior : MonoBehaviour
 	
 	private CapsuleCollider _col;
 	private Rigidbody _rb;
-	// LerpSpeed vector
+	// CapturedLerpSpeed vector
 	private Vector3 _velocity;
 	// origin collider height
 	// 
