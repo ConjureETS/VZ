@@ -93,11 +93,18 @@ public class SquadMovement : MonoBehaviour {
 
    public void getNewBuffer() 
    {
-       string[] newBuffer = mm.TransferBuffer(0);
-       for (int i = 0; i < 4; i++)
+       try
        {
-           movementBuffer[i] = newBuffer[i];
+           var newBuffer = mm.TransferBuffer(0);
+
+           for (int i = 0; i < 4; i++)
+           {
+               movementBuffer[i] = newBuffer[i];
+           }
        }
-   
+       catch (NullReferenceException ex)
+       {
+           Debug.LogError(ex);
+       }
    }
 }
