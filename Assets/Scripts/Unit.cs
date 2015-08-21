@@ -8,16 +8,16 @@ using UnityEngine.UI;
 public class Unit : MonoBehaviour 
 {
   
-    public int StartingHealth = 250;
-    public int StartingAttack = 100;
-    public Slider HealthSlider;
+    public float MaxHealth = 250;
+    public float StartingAttack = 100;
+    public Image HealthImage;
     public float CapturedLerpSpeed = 1;
     public int DestinationGap = 5;
     public float DyingTime = 1.0f;
     public AudioClip DeathClip;
 
     private LinkedList<Command> commandList;
-    private int _currentHp; // the unit hp
+    private float _currentHp; // the unit hp
     private CharacterBehavior _character;
     private bool isDamaged;
 
@@ -26,7 +26,7 @@ public class Unit : MonoBehaviour
     void Awake ()
     {
         IsCaptured = false;
-        CurrentHP = StartingHealth;
+        CurrentHP = MaxHealth;
        // Debug.Log("Current Human HP: " + CurrentHP);
         Attack = StartingAttack;
         // initialize default specie
@@ -38,6 +38,8 @@ public class Unit : MonoBehaviour
 
     void Update()
     {
+        HealthImage.fillAmount = (CurrentHP / MaxHealth);
+
         if (IsCaptured)
         {
            var gapVector = new Vector3(TargetDestination.position.x + DestinationGap, TargetDestination.position.y,TargetDestination.position.z + DestinationGap);
@@ -54,12 +56,12 @@ public class Unit : MonoBehaviour
         isDamaged = false;
     }
 
-    public void TakeDamage(int amountOfDamage)
+    public void TakeDamage(float amountOfDamage)
     {
         isDamaged = true;
         CurrentHP -= amountOfDamage;
 
-        //HealthSlider.value = CurrentHP;
+       
 
         // TODO play hurt animation
         // TODO play hurt sound
@@ -111,17 +113,17 @@ public class Unit : MonoBehaviour
 
     #region Unit properties
     public bool IsCaptured { get; set; }
-    public int CurrentHP
+    public float CurrentHP
     {
         get { return _currentHp; }
 
         set
         {
-            _currentHp = value > StartingHealth ? StartingHealth : value;
+            _currentHp = value > MaxHealth ? MaxHealth : value;
         }
     }
 
-    public int Attack { get; set; }
+    public float Attack { get; set; }
     public bool IsDead { get; set; }
 
     public Transform TargetDestination { get; set; }

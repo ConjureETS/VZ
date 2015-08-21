@@ -22,6 +22,7 @@ public class Squad : Unit
     private bool _playerInRange;
     private Squad _enemySquad;
     private float _timer;
+    private float _squadMaxHealth;
 
     /// <summary>
     /// The tag to assign for each soldiers in the squad
@@ -40,7 +41,7 @@ public class Squad : Unit
       
         InitializeSquad();
         InitializeDefaultTagAndLayer();
-        CurrentHP = ComputeTotalHp();
+        CurrentHP = ComputeRemainingHP();
        // Debug.Log("Current Zomb HP " + CurrentHP);
         Attack = ComputeAttackDamage();
         _numberOfAliveSoldiers = ComputeNumberOfAliveSoldiers();
@@ -51,7 +52,10 @@ public class Squad : Unit
     // Update is called once per frame
     void Update ()
     {
-        CurrentHP = ComputeTotalHp();
+        CurrentHP = ComputeRemainingHP();
+        _squadMaxHealth = ComputeTotalHP();
+
+        HealthImage.fillAmount = (CurrentHP / _squadMaxHealth);
         _numberOfAliveSoldiers = ComputeNumberOfAliveSoldiers();
 
         _timer += Time.deltaTime;
@@ -291,7 +295,7 @@ public class Squad : Unit
        
     }
 
-    public void ReceiveDamage(int amountOfDamage)
+    public void ReceiveDamage(float amountOfDamage)
     {
         // apply the damage to the first soldier in the list
         foreach (var soldier in Soldiers)
@@ -343,7 +347,7 @@ public class Squad : Unit
     /// Compute to attack damage depending of the numbers of soldiers in the squad.
     /// </summary>
     /// <returns>the damage to apply to each enemy soldiers units</returns>
-    protected int ComputeAttackDamage()
+    protected float ComputeAttackDamage()
     {
         // LINQ + Resharper FTW!!!!!
         var sumOfAttack = Soldiers.Sum(soldier => soldier.Attack);
@@ -351,9 +355,16 @@ public class Squad : Unit
         return ( 1 + (sumOfAttack / Soldiers.Count));
     }
 
-    protected int ComputeTotalHp()
+    protected float ComputeRemainingHP()
     {
         var sumOfHp = Soldiers.Sum(x => x.CurrentHP);
+
+        return sumOfHp;
+    }
+
+    protected float ComputeTotalHP()
+    {
+        var sumOfHp = Soldiers.Sum(x => x.MaxHealth);
 
         return sumOfHp;
     }
