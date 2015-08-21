@@ -9,6 +9,7 @@ public class Squad : Unit
     #region class members
     public float TimeBetweenAttacks = 0.5f;
     public string TeamTag;
+ 
     /// <summary>
     /// List of non attackable units.
     /// </summary>

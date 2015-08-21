@@ -104,7 +104,8 @@ public class SquadMovement : MonoBehaviour {
        }
        catch (NullReferenceException ex)
        {
-           Debug.LogError(ex);
+           //Debug.LogError(ex);
+           Debug.LogError("Error in method SquadMovement.getNewBuffer()! \n: " + ex);
        }
    }
 }
