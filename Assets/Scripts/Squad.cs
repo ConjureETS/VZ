@@ -151,7 +151,7 @@ public class Squad : Unit
             }
             else
             {
-                if (Tag.Equals(TagLayerManager.VampirePlayer))
+                if (TeamTag.Equals(TagLayerManager.VampirePlayer))
                 {
                     this.Tag = TagLayerManager.VampirePlayer; // set the tag to player 1      
                     this.Layer = TagLayerManager.VampireLayerIndex;

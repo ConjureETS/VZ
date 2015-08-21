@@ -538,6 +538,10 @@ Prefab:
       propertyPath: TargetCamera
       value: 
       objectReference: {fileID: 272569012}
+    - target: {fileID: 11487706, guid: 399d6675ad4fa384096256e051a3e131, type: 2}
+      propertyPath: TeamTag
+      value: VampirePlayer
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 399d6675ad4fa384096256e051a3e131, type: 2}
   m_IsPrefabParent: 0
